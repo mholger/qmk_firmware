@@ -1,6 +1,0 @@
--I.
--I../../../../tmk_core
--I../../../../tmk_core/protocol/lufa
--I../../../../tmk_core/protocol/lufa/LUFA-git
--I../../../../tmk_core/common
--include config.h
