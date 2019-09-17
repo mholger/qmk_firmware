@@ -73,3 +73,6 @@ id_rsa_*
 
 # things mholger sees
 *.exe
+
+# python things
+__pycache__
