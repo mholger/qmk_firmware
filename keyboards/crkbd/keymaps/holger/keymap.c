@@ -103,11 +103,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                        ,-----------------------------------------.
      KC_ESC,  KC_1,  KC_2,  KC_3,  KC_4,  KC_5,                         KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
   //|------+------+------+------+------+------|                        |------+------+------+------+------+------|
-     KC_TAB,  KC_6,  KC_7,  KC_8,  KC_9,  KC_0,                         KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
+     KC_ALT,KC_MINS, KC_Q,  KC_S,  KC_E,KC_EQL,                         KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
   //|------+------+------+------+------+------|                        |------+------+------+------+------+------|
-    KC_LSFT,  KC_A,  KC_S,  KC_D,KC_MINS,KC_EQL,                         KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
+     KC_SPC,  KC_6,  KC_7,  KC_8,  KC_9,  KC_0,                         KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
   //|------+------+------+------+------+------+--------------|  |------+------+------+------+------+------+------|
-                                  KC_LSFT, KC_LCTL, MT(KC_ALTKN,KC_SPC),    DF(_QWERTY), KC_RAISE, KC_ALTKN \
+                                  KC_LSFT, KC_LCTL, KC_TAB,    DF(_QWERTY), KC_RAISE, KC_ALTKN \
                               //`----------------------------'  `--------------------'
   ),
   // _GW2
