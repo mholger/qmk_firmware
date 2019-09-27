@@ -45,6 +45,7 @@ static uint8_t layer_name_idx = 0;
 
 // End  borrowed rs code
 
+
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
@@ -86,6 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        LSFT,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                    LGUI, LOWER,   SPC,      ENT, RAISE, LALT \
+
                               //`--------------------'  `--------------------'
   ),
 
