@@ -7,6 +7,8 @@ extern keymap_config_t keymap_config;
 extern rgblight_config_t rgblight_config;
 #endif
 
+void update_keymap_status(void);
+
 extern uint8_t is_master;
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
@@ -17,7 +19,32 @@ extern uint8_t is_master;
 #define _LOWER 1
 #define _RAISE 2
 #define _ADJUST 3
-#define _FFXIV 4
+#define _MMO 4
+
+#define L_NUM(_x) (1UL<<_x)
+
+// Layer names, stolen from rs keymap
+static char layer_status_buf[24];
+typedef struct {
+    uint32_t state;
+    char name[8];
+} LAYER_DISPLAY_NAME;
+
+#define LAYER_DISPLAY_MAX 7
+const LAYER_DISPLAY_NAME layer_display_name[LAYER_DISPLAY_MAX+1] = {
+    {0, "Default"},
+    {L_NUM(_QWERTY), "Qwerty"},
+    {L_NUM(_LOWER), "Lower"},
+    {L_NUM(_RAISE), "Raise"},
+    {L_NUM(_ADJUST), "Adjust"},
+    {L_NUM(_MMO), "MMO"},
+    {L_NUM(_LOWER) | L_NUM(_RAISE) | L_NUM(_ADJUST), "Tri"},
+    {__UINT32_MAX__, "???"},
+};
+static uint8_t layer_name_idx = 0;
+
+// End  borrowed rs code
+
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -59,19 +86,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, LOWER,   SPC,      ENT, RAISE, LALT \
+                                   LGUI, LOWER,   SPC,      ENT, RAISE, LALT \
+
                               //`--------------------'  `--------------------'
   ),
 
   [_LOWER] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        TAB,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,   DEL,\
+        TAB,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,  BSPC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       CTLTB,  MUTE,  VOLD,  VOLU,  PGUP,  PGDN,                   LEFT,   DOWN,   UP, RIGHT,  HOME,   END,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,    F1,    F2,    F3,    F4,    F5,                     F6,    F7,    F8,    F9,   F10, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, LOWER,   SPC,      ENT, RAISE, ALTKN \
+                                   LGUI, LOWER,   SPC,      ENT, RAISE, LALT \
                               //`--------------------'  `--------------------'
   ),
 
@@ -83,31 +111,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   UNDS,  PLUS,  LBRC,  RBRC,  BSLS,  TILD,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, LOWER,   SPC,      ENT, RAISE, ALTKN \
+                                   LGUI, LOWER,   SPC,      ENT, RAISE, LALT \
                               //`--------------------'  `--------------------'
   ),
 
   [_ADJUST] = LAYOUT( \
   //,-----------------------------------------.                ,-----------------------------------------.
-     KC_RST,  KC_LRST, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,                DF(_FFXIV),  KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
+     KC_RST,  KC_LRST, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,                TG(_MMO),  KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_DEL,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        KC_LTOG,  KC_LHUI,  KC_LSAI,  KC_LVAI, KC_XXXXX, KC_XXXXX,    KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        KC_LMOD,  KC_LHUD,  KC_LSAD,  KC_LVAD, KC_XXXXX, KC_XXXXX,                  KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  KC_GUIEI, KC_LOWER,   KC_SPC,      KC_ENT, KC_RAISE, KC_ALTKN \
+                                    KC_LGUI, KC_LOWER,   KC_SPC,      KC_ENT, KC_RAISE, KC_LALT \
                               //`--------------------'  `--------------------'
   ),
 
-  [_FFXIV] = LAYOUT( \
+  [_MMO] = LAYOUT( \
   //,-----------------------------------------.                        ,-----------------------------------------.
      KC_ESC,  KC_1,  KC_2,  KC_3,  KC_4,  KC_5,                         KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
   //|------+------+------+------+------+------|                        |------+------+------+------+------+------|
-     KC_TAB,  KC_6,  KC_7,  KC_8,  KC_9,  KC_0,                         KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
+     LALT_T(KC_L),KC_MINS,KC_Q,  KC_S,  KC_E,KC_EQL,                         KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
   //|------+------+------+------+------+------|                        |------+------+------+------+------+------|
-    KC_LSFT,  KC_A,  KC_S,  KC_D,KC_MINS,KC_EQL,                         KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
+     KC_SPC,  KC_6,  KC_7,  KC_8,  KC_9,  KC_0,                         KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX, KC_XXXXX,\
   //|------+------+------+------+------+------+--------------|  |------+------+------+------+------+------+------|
-                                  KC_LSFT, KC_LCTL, MT(KC_ALTKN,KC_SPC),    DF(_QWERTY), KC_RAISE, KC_ALTKN \
+                                  LCTL_T(KC_M),  LSFT_T(KC_B),  KC_TAB,    TG(_MMO), KC_LOWER, KC_RAISE \
                               //`----------------------------'  `--------------------'
   ),
   // _GW2
@@ -137,6 +165,7 @@ void matrix_init_user(void) {
     //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
     #ifdef SSD1306OLED
         iota_gfx_init(!has_usb());   // turns on the display
+        update_keymap_status();
     #endif
 }
 
@@ -160,10 +189,29 @@ void matrix_scan_user(void) {
    iota_gfx_task();
 }
 
+// Borrowed from rs
+void update_keymap_status(void) {
+    snprintf(layer_status_buf, sizeof(layer_status_buf) - 1, "Layer: %i:%ld:%s\n",
+            layer_name_idx, layer_state, layer_display_name[layer_name_idx].name);
+}
+
+uint32_t layer_state_set_user(uint32_t state) {
+    for (layer_name_idx = 0; layer_name_idx < LAYER_DISPLAY_MAX; ++layer_name_idx) {
+        if (state == 0 && layer_display_name[layer_name_idx].state == default_layer_state) {
+            break;
+        } else if (state != 0 && layer_display_name[layer_name_idx].state == state) {
+            break;
+        }
+    }
+    update_keymap_status();
+    return state;
+}
+// End borrowed from rs
+
 void matrix_render_user(struct CharacterMatrix *matrix) {
   if (is_master) {
     // If you want to change the display of OLED, you need to change here
-    matrix_write_ln(matrix, read_layer_state());
+    matrix_write(matrix, layer_status_buf);
     matrix_write_ln(matrix, read_keylog());
     matrix_write_ln(matrix, read_rgb_info());
 //    matrix_write_ln(matrix, read_keylogs());
@@ -201,7 +249,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
-        persistent_default_layer_set(1UL<<_QWERTY);
+        default_layer_set(L_NUM(_QWERTY));
       }
       return false;
       break;
