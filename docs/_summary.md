@@ -98,6 +98,7 @@
   * [ISP Flashing Guide](isp_flashing_guide.md)
   * [ARM Debugging Guide](arm_debugging.md)
   * [I2C Driver](i2c_driver.md)
+  * [WS2812 Driver](ws2812_driver.md)
   * [GPIO Controls](internals_gpio_control.md)
   * [Proton C Conversion](proton_c_conversion.md)
 
@@ -109,6 +110,7 @@
   * [Using Eclipse with QMK](other_eclipse.md)
   * [Using VSCode with QMK](other_vscode.md)
   * [Support](support.md)
+  * [How to add translations](translating.md)
 
 * QMK Internals (In Progress)
   * [Defines](internals_defines.md)
