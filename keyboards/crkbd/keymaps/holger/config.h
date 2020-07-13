@@ -46,3 +46,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_VAL_STEP 17
 
 #define FORCE_NKRO
+
+// #define OLED_FONT_H "keyboards/crkbd/keymaps/holger/glcdfont.c"

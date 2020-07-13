@@ -20,8 +20,11 @@ SWAP_HANDS_ENABLE = no      # Enable one-hand typing
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
 SLEEP_LED_ENABLE = yes    # Breathing sleep LED during USB suspend
 
+# OLED_DRIVER_ENABLE = yes
+
 # If you want to change the display of OLED, you need to change here
-SRC +=  ./keymaps/holger/horde2.c \
+SRC +=  \
+		./gw2.c \
         ./lib/rgb_state_reader.c \
         ./lib/layer_state_reader.c \
         ./lib/logo_reader.c \
