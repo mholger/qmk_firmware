@@ -76,6 +76,7 @@ enum macro_keycodes {
 #define KC_CTLTB CTL_T(KC_TAB)
 #define KC_GUIEI GUI_T(KC_LANG2)
 #define KC_ALTKN ALT_T(KC_LANG1)
+#define KC_TBCTL LCTL(KC_TAB)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
@@ -95,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
         TAB,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,  BSPC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB,  MUTE,  VOLD,  VOLU,  PGUP,  PGDN,                   LEFT,   DOWN,   UP, RIGHT,  HOME,   END,\
+      TBCTL,  MUTE,  VOLD,  VOLU,  PGUP,  PGDN,                   LEFT,   DOWN,   UP, RIGHT,  HOME,   END,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,    F1,    F2,    F3,    F4,    F5,                     F6,    F7,    F8,    F9,   F10, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
